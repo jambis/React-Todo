@@ -8,6 +8,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import IconButton from "@material-ui/core/IconButton";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
+import EditTodo from "./EditTodo";
 
 const styles = theme => ({
   textLine: {
@@ -21,7 +22,11 @@ const styles = theme => ({
 });
 
 class Todo extends Component {
-  render() {
+  renderEdit() {
+    return <EditTodo />;
+  }
+
+  renderTodo() {
     const { classes } = this.props;
     return (
       <ListItem
@@ -48,7 +53,11 @@ class Todo extends Component {
           primary={this.props.todo.task}
         />
         <ListItemSecondaryAction>
-          <IconButton edge="end" aria-label="edit">
+          <IconButton
+            edge="end"
+            aria-label="edit"
+            onClick={() => this.props.handleEdit(this.props.todo.id)}
+          >
             <EditIcon />
           </IconButton>
           <IconButton
@@ -60,6 +69,22 @@ class Todo extends Component {
           </IconButton>
         </ListItemSecondaryAction>
       </ListItem>
+    );
+  }
+
+  render() {
+    return (
+      <>
+        {this.props.todo.edit ? (
+          <EditTodo
+            todo={this.props.todo}
+            handleEdit={this.props.handleEdit}
+            handleTaskChange={this.props.handleTaskChange}
+          />
+        ) : (
+          this.renderTodo()
+        )}
+      </>
     );
   }
 }

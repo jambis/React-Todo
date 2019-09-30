@@ -23,17 +23,22 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      todos: [
-        { task: "Learn Figma", id: 1, completed: true },
-        { task: "Start side project", id: 2, completed: false }
-      ]
+      todos: localStorage.getItem("todos")
+        ? JSON.parse(localStorage.getItem("todos"))
+        : []
     };
+  }
+
+  componentDidUpdate(prevState) {
+    if (prevState !== this.state) {
+      localStorage.setItem("todos", JSON.stringify(this.state.todos));
+    }
   }
 
   handleSubmit = item => {
     this.setState({
       todos: [
-        { task: item, id: Date.now(), completed: false },
+        { task: item, id: Date.now(), edit: false, completed: false },
         ...this.state.todos
       ]
     });
@@ -54,6 +59,38 @@ class App extends React.Component {
     });
   };
 
+  handleTaskChange = (id, newTask) => {
+    this.setState({
+      todos: this.state.todos.map(item => {
+        if (item.id === id) {
+          return {
+            ...item,
+            task: newTask
+          };
+        } else {
+          return item;
+        }
+      })
+    });
+
+    this.handleEdit(id);
+  };
+
+  handleEdit = id => {
+    this.setState({
+      todos: this.state.todos.map(item => {
+        if (item.id === id) {
+          return {
+            ...item,
+            edit: !item.edit
+          };
+        } else {
+          return item;
+        }
+      })
+    });
+  };
+
   handleClear = () => {
     this.setState({
       todos: this.state.todos.filter(item => item.completed === false)
@@ -66,7 +103,7 @@ class App extends React.Component {
 
   render() {
     const { classes } = this.props;
-    console.log(this.props);
+
     return (
       <div className={classes.container}>
         <h2 className={classes.title}>Welcome to your Todo App!</h2>
@@ -75,6 +112,8 @@ class App extends React.Component {
           handleToggle={this.handleToggle}
           handleClear={this.handleClear}
           handleDelete={this.handleDelete}
+          handleEdit={this.handleEdit}
+          handleTaskChange={this.handleTaskChange}
           todos={this.state.todos}
         />
       </div>

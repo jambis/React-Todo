@@ -32,6 +32,7 @@ class TodoList extends Component {
   }
 
   renderTodos() {
+    console.log(this.props.todos);
     return (
       <>
         {this.state.searchTerm === ""
@@ -39,6 +40,8 @@ class TodoList extends Component {
               <Todo
                 handleToggle={this.props.handleToggle}
                 handleDelete={this.props.handleDelete}
+                handleEdit={this.props.handleEdit}
+                handleTaskChange={this.props.handleTaskChange}
                 key={todo.id}
                 index={index}
                 todo={todo}
@@ -48,6 +51,8 @@ class TodoList extends Component {
               <Todo
                 handleToggle={this.props.handleToggle}
                 handleDelete={this.props.handleDelete}
+                handleEdit={this.props.handleEdit}
+                handleTaskChange={this.props.handleTaskChange}
                 key={todo.id}
                 index={index}
                 todo={todo}
