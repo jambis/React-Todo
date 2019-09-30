@@ -60,20 +60,20 @@ class App extends React.Component {
   };
 
   handleTaskChange = (id, newTask) => {
+    console.log(newTask);
     this.setState({
       todos: this.state.todos.map(item => {
         if (item.id === id) {
           return {
             ...item,
-            task: newTask
+            task: newTask,
+            edit: !item.edit
           };
         } else {
           return item;
         }
       })
     });
-
-    this.handleEdit(id);
   };
 
   handleEdit = id => {

@@ -32,7 +32,6 @@ class TodoList extends Component {
   }
 
   renderTodos() {
-    console.log(this.props.todos);
     return (
       <>
         {this.state.searchTerm === ""
