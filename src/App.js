@@ -25,7 +25,20 @@ class App extends React.Component {
     this.state = {
       todos: localStorage.getItem("todos")
         ? JSON.parse(localStorage.getItem("todos"))
-        : []
+        : [
+            {
+              task: "Learn class lifecycle methods",
+              id: 1,
+              edit: false,
+              completed: false
+            },
+            {
+              task: "Implement local storage",
+              id: 2,
+              edit: false,
+              completed: true
+            }
+          ]
     };
   }
 
